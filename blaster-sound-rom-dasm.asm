@@ -810,7 +810,7 @@ F579: 20 13    bra  $F58E
 F57B: 81 31    cmpa #$31
 F57D: 22 07    bhi  $F586
 F57F: 80 2B    suba #$2B
-F581: BD FD 8F jsr  $FD8F		;;WALSH SYNTH
+F581: BD FD 8F jsr  $FD8F			;;WALSH SYNTH
 F584: 20 2A    bra  $F5B0
 F586: 80 23    suba #$23
 F588: 20 12    bra  $F59C
@@ -944,46 +944,40 @@ F670: 5B       illegal
 F671: 8C
 ;;
 ;;GWVTAB 
-F672: 08 7F cmpx #$087F
-F674: D9 FF    adcb $FF
-F676: D9 7F    adcb $7F
-F678: 24 00    bcc  $F67A
-F67A: 24 08    bcc  $F684
-F67C: 00       illegal
-F67D: 40       nega 
-F67E: 80 00    suba #$00
-F680: FF 00 80 stx  $0080
-F683: 40       nega 
-F684: 10       sba  
-F685: 7F B0 D9 clr  $B0D9
-F688: F5 FF F5 bitb $FFF5
-F68B: D9 B0    adcb $B0
-F68D: 7F 4E 24 clr  $4E24
-F690: 09       dex  
-F691: 00       illegal
-F692: 09       dex  
-F693: 24 4E    bcc  $F6E3
-F695: 10       sba  
-F696: 7F C5 EC clr  $C5EC
-F699: E7 BF    stb  (x+$BF)
-F69B: 8D 6D    bsr  $F70A
-F69D: 6A 7F    dec  (x+$7F)
-F69F: 94 92    anda $92
-F6A1: 71       illegal
-F6A2: 40       nega 
-F6A3: 17       tba  
-F6A4: 12       illegal
-F6A5: 39       rts  
-F6A6: 10       sba  
-F6A7: FF FF FF stx  $FFFF
-F6AA: FF 00 00 stx  $0000
-F6AD: 00       illegal
-F6AE: 00       illegal
-F6AF: FF FF FF stx  $FFFF
-F6B2: FF 00 00 stx  $0000
-F6B5: 00       illegal
-F6B6: 00       illegal
-F6B7: 48       asla 
+;;
+;;(WAVEFORM COUNT = $0D)
+;;
+;; GS2
+F672: 08
+F673: 7F D9 FF D9 7F 24 00 24 
+;;
+;; GSSQR2
+F67B: 08
+F67C: 00 40 80 00 FF 00 80 40  
+;;
+;; GS1
+F684: 10       
+F685: 7F B0 D9 F5
+F689: FF F5 D9 B0
+F68D: 7F 4E 24 09 
+F691: 00 09 24 4E
+;;
+;; GS12
+F695: 10 
+F696: 7F C5 EC E7 
+F69A: BF 8D 6D 6A 
+F69E: 7F 94 92 71
+F6A2: 40 17 12 39
+;;
+;; GSQ22
+F6A6: 10 
+F6A7: FF FF FF FF 
+F6AB: 00 00 00 00
+F6AF: FF FF FF FF
+F6B3: 00 00 00 00
+;;
+;; GS72
+F6B7: 48
 F6B8: 8A 95    ora  #$95
 F6BA: A0 AB    suba (x+$AB)
 F6BC: B5 BF C8 bita $BFC8
@@ -1030,45 +1024,34 @@ F6F9: 40       nega
 F6FA: 4A       deca 
 F6FB: 54       lsrb 
 F6FC: 5F       clrb 
-F6FD: 6A 75    dec  (x+$75)
-F6FF: 7F 10 59 clr  $1059
-F702: 7B       illegal
-F703: 98 AC    eora $AC
-F705: B3       illegal
-F706: AC 98    cmpx (x+$98)
-F708: 7B       illegal
-F709: 59       rolb 
-F70A: 37       pshb 
-F70B: 19       daa  
-F70C: 06       tap  
-F70D: 00       illegal
-F70E: 06       tap  
-F70F: 19       daa  
-F710: 37       pshb 
-F711: 08       inx  
-F712: FF FF FF stx  $FFFF
-F715: FF 00 00 stx  $0000
-F718: 00       illegal
-F719: 00       illegal
-F71A: 10       sba  
-F71B: 76 FF B8 ror  $FFB8
-F71E: D0 9D    subb $9D
-F720: E6 6A    ldb  (x+$6A)
-F722: 82 76    sbca #$76
-F724: EA 81    orb  (x+$81)
-F726: 86 4E    lda  #$4E
-F728: 9C 32    cmpx $32
-F72A: 63 10    com  (x+$10)
-F72C: 00       illegal
-F72D: F4 00 E8 andb $00E8
-F730: 00       illegal
-F731: DC       illegal
-F732: 00       illegal
-F733: E2 00    sbcb (x+$00)
-F735: DC       illegal
-F736: 00       illegal
-F737: E8 00    eorb (x+$00)
-F739: F4 00 00 andb $0000
+F6FD: 6A 75 7F 
+;;
+;; GS1.7
+F700: 10
+F701: 59 7B 98 AC
+F705: B3 AC 98 7B
+F709: 59 37 19 06
+F70D: 00 06 19 37
+;;
+;; GSQ2
+F711: 08  
+F712: FF FF FF FF 00 00 00 00
+;;
+;; GS1234
+F71A: 10
+F71B: 76 FF B8 D0 
+F71F: 9D E6 6A 82 
+F723: 76 EA 81 86 
+F727: 4E 9C 32 63
+;;
+;; MW1
+F72B: 10
+F72C: 00 F4 00 E8
+F730: 00 DC 00 E2
+F734: 00 DC 00 E8
+F738: 00 F4 00 00
+;;
+;; HBPAT2
 F73C: 48       asla 
 F73D: 45       illegal
 F73E: 4B       illegal
@@ -1124,42 +1107,25 @@ F780: 2A 30    bpl  $F7B2
 F782: 35       txs  
 F783: 3B       rti  
 F784: 40       nega 
-F785: 0C       clc  
-F786: 00       illegal
-F787: 50       negb 
-F788: 60 B0    neg  (x+$B0)
-F78A: 20 20    bra  $F7AC
-F78C: F0 90 80 subb $9080
-F78F: C0 50    subb #$50
-F791: 70 07 40 neg  $0740
-F794: 09       dex  
-F795: 35       txs  
-F796: 0C       clc  
-F797: 29 0F    bvs  $F7A8
-F799: 20 24    bra  $F7BF
-F79B: 7F B0 D6 clr  $B0D6
-F79E: E8 E3    eorb (x+$E3)
-F7A0: C9 A3    adcb #$A3
-F7A2: 7B       illegal
-F7A3: 5E       illegal
-F7A4: 54       lsrb 
-F7A5: 5E       illegal
-F7A6: 7B       illegal
-F7A7: A3       illegal
-F7A8: C9 E3    adcb #$E3
-F7AA: E8 D6    eorb (x+$D6)
-F7AC: B0 7F 4C suba $7F4C
-F7AF: 26 14    bne  $F7C5
-F7B1: 19       daa  
-F7B2: 33       pulb 
-F7B3: 5A       decb 
-F7B4: 81 9E    cmpa #$9E
-F7B6: A8 9E    eora (x+$9E)
-F7B8: 81 5A    cmpa #$5A
-F7BA: 33       pulb 
-F7BB: 19       daa  
-F7BC: 14       illegal
-F7BD: 26 4C    bne  $F80B
+;;
+;; Sinistar Waveform #6
+F785: 0C   
+F786: 00 50 
+F788: 60 B0
+F78A: 20 20
+F78C: F0 90 80
+F78F: C0 50 70
+;;
+;; Sinistar Waveform #7
+F792: 07
+F793: 40 09 35 0C 29 0F 20
+;;
+;; NEW WAVEFORM (sounds like Inferno stuff, very buzzy bass)
+F79A: 24
+F79B: 7F B0 D6 E8 E3 C9 A3 7B 5E
+F7A4: 54 5E 7B A3 C9 E3 E8 D6 B0
+F7AB: 7F 4C 26 14 19 33 5A 81 9E
+F7B6: A8 9E 81 5A 33 19 14 26 4C
 ;;
 ;;SVTAB
 F7BF: 81 24 00 00 00 16 31
@@ -1172,7 +1138,7 @@ F7E9: 21 35 11 FF 00 0D 1B
 F7F0: 46 59 00 00 00 08 85
 F7F7: 31 11 00 01 00 03 6A
 F7FE: 63 25 00 03 0A 03 6A
-F805: 43 0D 00 04 02 0D 1B
+F805: 43 0D 00 04 02 0D 1B			;;(uses new waveform)
 F80C: 08 4C 0B 40 01 02 F3
 F813: 1F 12 00 FF 10 04 69
 F81A: F1 11 00 FF 00 0D 00
@@ -1184,30 +1150,11 @@ F83D: 11 0B 06 02 20 03 EF
 F844: F4 18 00 00 00 12 B3
 F84B: 52 32 12 00 00 10 DF
 F852: 1F 14 02 00 00 05 F6
-F859: 21 30 ldb  $2130
-F85B: 00       illegal
-F85C: FF 00 1B stx  $001B
-F85F: 0D       sec  
-F860: F1 19 00 cmpb $1900
-F863: 00       illegal
-F864: 00       illegal
-F865: 0E       cli  
-F866: A4 31    anda (x+$31)
-F868: 19       daa  
-F869: 00       illegal
-F86A: 01       nop  
-F86B: 00       illegal
-F86C: 03       illegal
-F86D: 6A 41    dec  (x+$41)
-F86F: 02       illegal
-F870: D0 00    subb $00
-F872: 00       illegal
-F873: 27 6D    beq  $F8E2
-F875: 03       illegal
-F876: 15       illegal
-F877: 11       cba  
-F878: FF 00 0D stx  $000D
-F87B: 1B       aba  
+F859: 21 30 00 FF 00 1B 0D
+F860: F1 19 00 00 00 0E A4 
+F867: 31 19 00 01 00 03 6A 
+F86E: 41 02 D0 00 00 27 6D
+F875: 03 15 11 FF 00 0D 1B
 ;;
 ;;GFRTAB
 F87C: A0 98    suba (x+$98)
