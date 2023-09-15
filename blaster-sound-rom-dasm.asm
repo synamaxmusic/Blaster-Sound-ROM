@@ -1,6 +1,6 @@
 ;;
-F000: 89 							;CHECKSUM BYTE
-F001: 28       						;"(C)1983 WILLIAMS ELECTRONICS"
+F000: 89 					;CHECKSUM BYTE
+F001: 28       					;"(C)1983 WILLIAMS ELECTRONICS"
 F002: 43       
 F003: 29 31    
 F005: 39      
@@ -116,18 +116,23 @@ F0C4: A0 F1    suba (x+$F1)
 F0C6: C0 F1    subb #$F1
 F0C8: 00       illegal
 F0C9: 00       illegal
-
+*
+*VARI LOADER
+*
 F0CA: 16       tab  
 F0CB: 48       asla 
 F0CC: 48       asla 
 F0CD: 48       asla 
 F0CE: 1B       aba  
-F0CF: CE 00 11 ldx  #$0011
+F0CF: CE 00 11 ldx  #$0011			;;(LOCRAM)
 F0D2: DF 0D    stx  $0D
 F0D4: CE F6 23 ldx  #$F623
 F0D7: BD F5 C3 jsr  $F5C3
 F0DA: C6 09    ldb  #$09
 F0DC: 7E F3 A8 jmp  $F3A8
+*
+*VARIABLE DUTY CYCLE SQUARE WAVE ROUTINE
+*
 F0DF: 96 19    lda  $19
 F0E1: B7 04 00 sta  $0400
 F0E4: 96 11    lda  $11
@@ -166,12 +171,21 @@ F123: 27 06    beq  $F12B
 F125: 9B 11    adda $11
 F127: 97 11    sta  $11
 F129: 26 B9    bne  $F0E4
+;;VARX
 F12B: 39       rts  
+*
+*LAUNCH
+*
+;; Variation of LAUNCH?
+;;
 F12C: 86 FF    lda  #$FF
 F12E: 97 18    sta  $18
-F130: 86 D0    lda  #$D0
-F132: C6 0E    ldb  #$0E
+F130: 86 D0    lda  #$D0			;;(originally #$60)
+F132: C6 0E    ldb  #$0E			;;(originally #$FF)
 F134: 20 10    bra  $F146
+*
+*LIGHTNING
+*
 F136: 86 01    lda  #$01
 F138: 97 18    sta  $18
 F13A: C6 03    ldb  #$03
@@ -180,6 +194,9 @@ F13E: 86 FF    lda  #$FF
 F140: 97 18    sta  $18
 F142: 86 D0    lda  #$D0
 F144: C6 15    ldb  #$15
+*
+*LIGHTNING+APPEAR NOISE ROUTINE
+*
 F146: 97 17    sta  $17
 F148: 86 FF    lda  #$FF
 F14A: B7 04 00 sta  $0400
@@ -191,11 +208,13 @@ F154: 44       lsra
 F155: 44       lsra 
 F156: 98 06    eora $06
 F158: 44       lsra 
-F159: 76 00 05 ror  $0005
-F15C: 76 00 06 ror  $0006
+F159: 76 00 05 ror  $0005			;;(HI)
+F15C: 76 00 06 ror  $0006			;;(LO)
 F15F: 24 03    bcc  $F164
 F161: 73 04 00 com  $0400
+;;LITE2
 F164: 96 17    lda  $17
+;;LITE3
 F166: 4A       deca 
 F167: 26 FD    bne  $F166
 F169: 5A       decb 
@@ -205,21 +224,35 @@ F16E: 9B 18    adda $18
 F170: 97 17    sta  $17
 F172: 26 DB    bne  $F14F
 F174: 39       rts  
-F175: 86 A0    lda  #$A0
-F177: 20 02    bra  $F17B
+*
+*TURBO
+*
+F175: 86 A0    lda  #$A0			;;(new)
+F177: 20 02    bra  $F17B			;;(new)
+*
+*TURBO
+*
 F179: 86 20    lda  #$20
 F17B: 97 13    sta  $13
 F17D: 97 16    sta  $16
-F17F: 86 00    lda  #$00
+F17F: 86 00    lda  #$00			;;(originally #$1)
 F181: CE 00 01 ldx  #$0001
 F184: C6 FF    ldb  #$FF
 F186: 20 0D    bra  $F195
+*
+*TURBO
+*
 F188: 86 20    lda  #$20
 F18A: 97 13    sta  $13
 F18C: 97 16    sta  $16
 F18E: 86 01    lda  #$01
 F190: CE 00 01 ldx  #$0001
-F193: C6 C8    ldb  #$C8
+F193: C6 C8    ldb  #$C8			;;(originally #$FF)
+*
+*WHITE NOISE ROUTINE
+*X=INIT PERIOD, ACCB=INIT AMP, ACCA DECAY RATE
+*CYCNT=CYCLE COUNT, NFFLG= FREQ DECAY FLAG
+*
 F195: 97 11    sta  $11
 F197: DF 14    stx  $14
 F199: D7 12    stb  $12
@@ -512,6 +545,7 @@ F3A3: 43       coma
 F3A4: 4F       clra 
 F3A5: 5A       decb 
 F3A6: 67 73    asr  (x+$73)
+;;TRANS
 F3A8: 36       psha 
 F3A9: A6 00    lda  (x+$00)
 F3AB: DF 0B    stx  $0B
@@ -806,6 +840,7 @@ F5B9: 96 00    lda  $00
 F5BB: 27 03    beq  $F5C0
 F5BD: 7E F1 CC jmp  $F1CC
 F5C0: 7E F3 D4 jmp  $F3D4
+;;ADDX
 F5C3: DF 0B    stx  $0B
 F5C5: 9B 0C    adda $0C
 F5C7: 97 0C    sta  $0C
@@ -813,10 +848,12 @@ F5C9: 24 03    bcc  $F5CE
 F5CB: 7C 00 0B inc  $000B
 F5CE: DE 0B    ldx  $0B
 F5D0: 39       rts  
+;;NMI
 F5D1: 0F       sei  
 F5D2: 8E 00 7F lds  #$007F
 F5D5: CE FF FF ldx  #$FFFF
 F5D8: 5F       clrb 
+;;NMI1
 F5D9: EB 00    addb (x+$00)
 F5DB: 09       dex  
 F5DC: 8C F0 00 cmpx #$F000
@@ -824,6 +861,7 @@ F5DF: 26 F8    bne  $F5D9
 F5E1: E1 00    cmpb (x+$00)
 F5E3: 27 01    beq  $F5E6
 F5E5: 3E       wai  
+;;NMI2
 F5E6: BD F2 0D jsr  $F20D
 F5E9: 20 E6    bra  $F5D1
 F5EB: F3       illegal
@@ -854,7 +892,7 @@ F61B: F1 DF F3 cmpb $DFF3
 F61E: 34       des  
 F61F: F2 0D F1 sbcb $0DF1
 F622: E4 
-;;
+;;VVECT
 F623: 40    andb (x+$40)
 F624: 01       nop  
 F625: 00       illegal
